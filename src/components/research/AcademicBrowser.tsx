@@ -144,7 +144,7 @@ export function AcademicBrowser({
     };
 
     return (
-        <div className="flex flex-col h-full bg-gradient-warm min-h-[600px] rounded-xl overflow-hidden border">
+        <div className="flex flex-col h-screen max-h-[85vh] bg-gradient-to-br from-[#FFF5F5] via-[#FFF0F5] to-[#F0F7FF] rounded-3xl overflow-hidden border-4 border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             {/* Writing Feedback Popup */}
             <WritingFeedbackPopup
                 feedback={currentFeedback}
@@ -152,20 +152,20 @@ export function AcademicBrowser({
             />
 
             {/* Header */}
-            <div className="bg-card/80 backdrop-blur-xl border-b border-border/50 shadow-soft">
-                <div className="p-4">
+            <div className="bg-white/80 backdrop-blur-md border-b border-indigo-50 z-10">
+                <div className="p-4 md:px-8 md:py-5">
                     <div className="flex items-center justify-between gap-4 flex-wrap">
                         {/* Logo & Title */}
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-hero flex items-center justify-center shadow-glow-orange">
-                                <BookOpen className="w-5 h-5 text-primary-foreground" />
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-lg shadow-orange-200 transform hover:scale-105 transition-transform duration-200">
+                                <BookOpen className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h1 className="font-fredoka text-xl font-bold text-foreground flex items-center gap-2">
+                                <h1 className="font-fredoka text-2xl font-bold text-slate-800 flex items-center gap-2">
                                     {state.language === 'es' ? 'Centro de Investigación' : 'Research Center'}
-                                    <Sparkles className="w-4 h-4 text-primary animate-pulse-soft" />
+                                    <Sparkles className="w-5 h-5 text-yellow-500 animate-pulse" />
                                 </h1>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-sm font-medium text-slate-500 bg-slate-100/50 px-2 py-0.5 rounded-full inline-block mt-1">
                                     {state.language === 'es'
                                         ? '📚 Historia • 🌍 Geografía • 🔬 Ciencias • 📖 Sociales'
                                         : '📚 History • 🌍 Geography • 🔬 Sciences • 📖 Social Studies'
@@ -175,16 +175,18 @@ export function AcademicBrowser({
                         </div>
 
                         {/* Controls */}
-                        <div className="flex items-center gap-4 flex-wrap">
+                        <div className="flex items-center gap-3 flex-wrap bg-white/50 p-2 rounded-xl border border-indigo-50/50 backdrop-blur-sm">
                             <GradeSelector
                                 grade={state.grade}
                                 onChange={setGrade}
                                 language={state.language}
                             />
+                            <div className="h-6 w-px bg-slate-200 mx-1"></div>
                             <LanguageToggle
                                 language={state.language}
                                 onChange={setLanguage}
                             />
+                            <div className="h-6 w-px bg-slate-200 mx-1"></div>
                             <SaveStatusIndicator
                                 status={state.saveStatus}
                                 language={state.language}
@@ -194,7 +196,7 @@ export function AcademicBrowser({
                     </div>
 
                     {/* Progress */}
-                    <div className="mt-4">
+                    <div className="mt-6">
                         <ProgressSteps
                             currentStep={state.currentStep}
                             language={state.language}
@@ -204,10 +206,10 @@ export function AcademicBrowser({
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50/50">
+            <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
                 <div className="grid lg:grid-cols-2 gap-8 h-full">
                     {/* Left Column - Source Text & Editor */}
-                    <div className="space-y-6">
+                    <div className="space-y-6 animate-slide-in-left" style={{ animationDuration: '0.4s' }}>
                         <TextPasteArea
                             value={state.sourceText}
                             onChange={setSourceText}
@@ -217,35 +219,40 @@ export function AcademicBrowser({
                         />
 
                         {state.analysis && (
-                            <ReportEditor
-                                value={state.paraphrasedText}
-                                onChange={setParaphrasedText}
-                                language={state.language}
-                                analysis={state.analysis}
-                                disabled={state.isAnalyzing}
-                                grade={state.grade}
-                            />
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
+                                <ReportEditor
+                                    value={state.paraphrasedText}
+                                    onChange={setParaphrasedText}
+                                    language={state.language}
+                                    analysis={state.analysis}
+                                    disabled={state.isAnalyzing}
+                                    grade={state.grade}
+                                />
+                            </div>
                         )}
                     </div>
 
                     {/* Right Column - Tutor & Progress */}
-                    <div className="space-y-6">
+                    <div className="space-y-6 animate-slide-in-right" style={{ animationDuration: '0.6s' }}>
                         {/* Tutor Avatar */}
-                        <div className="flex items-center gap-4 p-4 glass-panel">
-                            <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-glow-teal animate-float">
+                        <div className="flex items-center gap-5 p-5 bg-white rounded-3xl border-2 border-indigo-50 shadow-sm relative overflow-hidden group hover:shadow-md transition-all duration-300">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl opacity-50 -mr-10 -mt-10 group-hover:bg-indigo-100 transition-colors"></div>
+
+                            <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg shadow-indigo-100 border-4 border-white z-10 shrink-0 transform group-hover:rotate-3 transition-transform duration-300">
                                 <img src={tutorAvatar} alt="Nova Tutor" className="w-full h-full object-cover" />
                             </div>
-                            <div>
-                                <h2 className="font-fredoka text-lg font-bold text-foreground">
+                            <div className="z-10">
+                                <h2 className="font-fredoka text-xl font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">
                                     {state.language === 'es' ? 'Tu Tutor Nova' : 'Your Nova Tutor'}
                                 </h2>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-sm text-slate-500 max-w-[200px] leading-relaxed">
                                     {state.language === 'es'
                                         ? '¡Estoy aquí para ayudarte a escribir tu reporte!'
                                         : 'I\'m here to help you write your report!'
                                     }
                                 </p>
-                                <div className={`grade-badge grade-${state.grade} mt-2`}>
+                                <div className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold mt-2 bg-indigo-100 text-indigo-700 border border-indigo-200`}>
+                                    <BookOpen className="w-3 h-3" />
                                     {state.language === 'es' ? `${state.grade}º Grado` : `Grade ${state.grade}`}
                                 </div>
                             </div>
@@ -261,48 +268,56 @@ export function AcademicBrowser({
 
                         {/* Citation Helper */}
                         {state.analysis && (
-                            <CitationHelper
-                                grade={state.grade}
-                                language={state.language}
-                                sources={state.sources}
-                                onAddSource={addSource}
-                                onRemoveSource={removeSource}
-                                onInsertCitation={handleInsertCitation}
-                            />
+                            <div className="animate-in fade-in slide-in-from-right-4 duration-500 delay-100">
+                                <CitationHelper
+                                    grade={state.grade}
+                                    language={state.language}
+                                    sources={state.sources}
+                                    onAddSource={addSource}
+                                    onRemoveSource={removeSource}
+                                    onInsertCitation={handleInsertCitation}
+                                />
+                            </div>
                         )}
 
                         {/* Report Completeness Checklist */}
                         {state.analysis && (
-                            <ReportCompleteness
-                                paraphrasedText={state.paraphrasedText}
-                                analysis={state.analysis}
-                                grade={state.grade}
-                                language={state.language}
-                            />
+                            <div className="animate-in fade-in slide-in-from-right-4 duration-500 delay-200">
+                                <ReportCompleteness
+                                    paraphrasedText={state.paraphrasedText}
+                                    analysis={state.analysis}
+                                    grade={state.grade}
+                                    language={state.language}
+                                />
+                            </div>
                         )}
 
                         {/* Report Review */}
                         {state.analysis && (
-                            <ReportReview
-                                paraphrasedText={state.paraphrasedText}
-                                sourceText={state.sourceText}
-                                analysis={state.analysis}
-                                grade={state.grade}
-                                language={state.language}
-                                onRequestFeedback={handleSubmitReport}
-                            />
+                            <div className="animate-in fade-in slide-in-from-right-4 duration-500 delay-300">
+                                <ReportReview
+                                    paraphrasedText={state.paraphrasedText}
+                                    sourceText={state.sourceText}
+                                    analysis={state.analysis}
+                                    grade={state.grade}
+                                    language={state.language}
+                                    onRequestFeedback={handleSubmitReport}
+                                />
+                            </div>
                         )}
                     </div>
                 </div>
             </div>
 
             {/* Footer */}
-            <div className="bg-card/50 p-4 border-t text-center text-xs text-muted-foreground">
-                <p>
+            <div className="bg-white/50 p-3 border-t border-indigo-50/50 text-center text-xs font-medium text-slate-400">
+                <p className="flex items-center justify-center gap-2">
+                    <Sparkles className="w-3 h-3" />
                     {state.language === 'es'
-                        ? '🌟 ¡Recuerda usar siempre tus propias palabras!'
-                        : '🌟 Remember to always use your own words!'
+                        ? '¡Recuerda usar siempre tus propias palabras!'
+                        : 'Remember to always use your own words!'
                     }
+                    <Sparkles className="w-3 h-3" />
                 </p>
             </div>
         </div>

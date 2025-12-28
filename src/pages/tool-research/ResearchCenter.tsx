@@ -327,10 +327,57 @@ export default function ResearchCenter() {
                                 </Tabs>
                             </>
                         ) : (
-                            <div className="h-full flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed rounded-xl p-12">
-                                <Search className="w-16 h-16 mb-4 opacity-20" />
-                                <h3 className="text-xl font-semibold">Selecciona un Proyecto</h3>
-                                <p>O crea uno nuevo para comenzar a investigar.</p>
+                            <div className="h-full min-h-[500px] relative overflow-hidden rounded-3xl border border-indigo-50 bg-gradient-to-br from-white via-indigo-50/50 to-blue-50 flex flex-col items-center justify-center text-center p-8 lg:p-12 animate-in fade-in duration-1000">
+                                {/* Ambient Background Glows */}
+                                <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl -translate-y-1/2"></div>
+                                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl translate-y-1/3"></div>
+
+                                {/* Main Image with blending mask */}
+                                <div className="relative w-full max-w-2xl h-[400px] mb-6">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-white/0 via-transparent to-transparent z-10"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent 60% to-indigo-50/90 z-10"></div>
+                                    <img
+                                        src="/src/assets/futuristic-lab.png"
+                                        alt="Futuristic Research Center"
+                                        className="w-full h-full object-contain mx-auto drop-shadow-2xl mask-image-gradient"
+                                        style={{
+                                            maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+                                            WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
+                                        }}
+                                    />
+
+                                    {/* Floating Elements on top of image */}
+                                    <div className="absolute top-10 right-10 animate-float" style={{ animationDelay: '0s' }}>
+                                        <div className="bg-white/80 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50">
+                                            <Search className="w-8 h-8 text-blue-500" />
+                                        </div>
+                                    </div>
+                                    <div className="absolute bottom-20 left-10 animate-float" style={{ animationDelay: '2s' }}>
+                                        <div className="bg-white/80 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50">
+                                            <BookOpen className="w-8 h-8 text-orange-500" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Content Overlay */}
+                                <div className="relative z-20 -mt-12 backdrop-blur-[2px]">
+                                    <h3 className="font-fredoka text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-600 to-purple-600 mb-4 drop-shadow-sm tracking-tight">
+                                        ¡Explora el Futuro! 🚀
+                                    </h3>
+                                    <p className="text-xl text-slate-600 max-w-lg mx-auto font-medium leading-relaxed">
+                                        Tu laboratorio de conocimiento te espera.
+                                        <span className="block mt-2 text-base text-slate-500">
+                                            Selecciona un proyecto a la izquierda o crea uno nuevo para comenzar.
+                                        </span>
+                                    </p>
+
+                                    <div className="mt-8 flex gap-3 justify-center">
+                                        <Button onClick={() => setIsCreating(true)} size="lg" className="rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:shadow-lg hover:scale-105 transition-all duration-300 font-bold text-lg px-8 border-none ring-2 ring-white/20">
+                                            <Plus className="w-5 h-5 mr-2" />
+                                            Crear Nuevo Proyecto
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
